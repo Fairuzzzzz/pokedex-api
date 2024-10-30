@@ -2,4 +2,4 @@ service:
   port: ":9999"
 
 database:
-  dataSourceName: "postgres://admin:root@localhost:5432/test_db?sslmode=disable"
+  dataSourceName: "postgres://admin:root@localhost:5432/pokedex?sslmode=disable"

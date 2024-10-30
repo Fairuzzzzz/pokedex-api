@@ -26,7 +26,7 @@ func main() {
 	)
 
 	if err != nil {
-		log.Fatalf("Gagal initialisasi config", err)
+		log.Fatal("Gagal initialisasi config", err)
 	}
 
 	cfg = configs.Get()

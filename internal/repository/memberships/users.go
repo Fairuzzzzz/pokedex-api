@@ -11,7 +11,7 @@ func (r *repository) CreateUser(model memberships.User) error {
 
 func (r *repository) GetUser(email, username string, id uint) (*memberships.User, error) {
 	user := memberships.User{}
-	res := r.db.Where("email = ?", email).Or("username = ?", username).Or("id = ?", id)
+	res := r.db.Where("email = ?", email).Or("username = ?", username).Or("id = ?", id).Find(&user)
 	if res.Error != nil {
 		return nil, res.Error
 	}
