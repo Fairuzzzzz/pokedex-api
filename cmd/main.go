@@ -2,12 +2,17 @@ package main
 
 import (
 	"log"
+	"net/http"
 
 	"github.com/Fairuzzzzz/pokedex-api/internal/configs"
 	membershipsHandler "github.com/Fairuzzzzz/pokedex-api/internal/handler/memberships"
+	pokesHandler "github.com/Fairuzzzzz/pokedex-api/internal/handler/poke"
 	"github.com/Fairuzzzzz/pokedex-api/internal/models/memberships"
 	membershipsRepo "github.com/Fairuzzzzz/pokedex-api/internal/repository/memberships"
+	pokesOutbound "github.com/Fairuzzzzz/pokedex-api/internal/repository/poke"
 	membershipsSvc "github.com/Fairuzzzzz/pokedex-api/internal/service/memberships"
+	pokesSvc "github.com/Fairuzzzzz/pokedex-api/internal/service/poke"
+	"github.com/Fairuzzzzz/pokedex-api/pkg/httpclient"
 	"github.com/Fairuzzzzz/pokedex-api/pkg/internalsql"
 	"github.com/gin-gonic/gin"
 )
@@ -37,12 +42,21 @@ func main() {
 
 	db.AutoMigrate(&memberships.User{})
 
+	httpClient := httpclient.NewClient(&http.Client{})
+
 	membershipRepo := membershipsRepo.NewRepository(db)
+
+	pokeOutbound := pokesOutbound.NewPokeOutbound(cfg, httpClient)
 
 	membershipSvc := membershipsSvc.NewService(cfg, membershipRepo)
 
+	pokeSvc := pokesSvc.NewOutbound(pokeOutbound)
+
 	membershipHandler := membershipsHandler.NewHandler(r, membershipSvc)
 	membershipHandler.RegisterRoute()
+
+	pokeHandler := pokesHandler.NewHandler(r, pokeSvc)
+	pokeHandler.RegisterRoute()
 
 	r.Run(cfg.Service.Port)
 }
