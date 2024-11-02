@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+//go:generate mockgen -source=handler.go -destination=handler_mock_test.go -package=poke
 type service interface {
 	PokemonSearch(ctx context.Context, name string) (*poke.SearchPokemonResponse, error)
 }

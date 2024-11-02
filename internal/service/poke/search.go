@@ -46,10 +46,7 @@ func (s *service) PokemonSearch(ctx context.Context, name string) (*poke.SearchP
 	}
 
 	species := poke.PokemonSpecies{
-		Name:       pokeDetails.Species.Name,
-		Color:      poke.PokemonColor(pokeDetails.Species.Color),
-		Habitat:    poke.PokemonHabitat(pokeDetails.Species.Habitat),
-		Generation: poke.PokemonGeneration(pokeDetails.Species.Generation),
+		Name: pokeDetails.Species.Name,
 	}
 
 	types := make([]poke.PokemonType, len(pokeDetails.Types))
@@ -67,6 +64,8 @@ func (s *service) PokemonSearch(ctx context.Context, name string) (*poke.SearchP
 		Name:           pokeDetails.Name,
 		BaseExperience: pokeDetails.BaseExperience,
 		Height:         pokeDetails.Height,
+		Weight:         pokeDetails.Weight,
+		Order:          pokeDetails.Order,
 		Abilities:      abilities,
 		Moves:          moves,
 		Species:        species,

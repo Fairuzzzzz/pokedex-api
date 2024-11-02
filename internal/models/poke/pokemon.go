@@ -6,6 +6,8 @@ type (
 		Name           string             `json:"name"`
 		BaseExperience int                `json:"base_experience"`
 		Height         int                `json:"height"`
+		Weight         int                `json:"weight"`
+		Order          int                `json:"order"`
 		Abilities      []PokemonAbilities `json:"abilities"`
 		Moves          []PokemonMoves     `json:"moves"`
 		Species        PokemonSpecies     `json:"species"`
@@ -32,10 +34,7 @@ type (
 	}
 
 	PokemonSpecies struct {
-		Name       string            `json:"name"`
-		Color      PokemonColor      `json:"color"`
-		Habitat    PokemonHabitat    `json:"habitat"`
-		Generation PokemonGeneration `json:"generation"`
+		Name string `json:"name"`
 	}
 
 	PokemonStats struct {
@@ -54,18 +53,6 @@ type (
 	}
 
 	TypeDetails struct {
-		Name string `json:"name"`
-	}
-
-	PokemonColor struct {
-		Name string `json:"name"`
-	}
-
-	PokemonHabitat struct {
-		Name string `json:"name"`
-	}
-
-	PokemonGeneration struct {
 		Name string `json:"name"`
 	}
 )

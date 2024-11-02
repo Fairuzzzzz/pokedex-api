@@ -14,7 +14,7 @@ type Pokemon struct {
 	Name           string             `json:"name"`
 	BaseExperience int                `json:"base_experience"`
 	Height         int                `json:"height"`
-	IsDefault      int                `json:"is_default"`
+	IsDefault      bool               `json:"is_default"`
 	Order          int                `json:"order"`
 	Weight         int                `json:"weight"`
 	Abilities      []PokemonAbilities `json:"abilities"`
@@ -28,7 +28,7 @@ type PokemonAbilities struct {
 	IsHidden bool `json:"is_hidden"`
 	Slot     int  `json:"slot"`
 	Ability  struct {
-		Name string `json"name"`
+		Name string `json:"name"`
 	} `json:"ability"`
 }
 
@@ -46,27 +46,6 @@ type MoveDetails struct {
 }
 
 type PokemonSpecies struct {
-	Name          string            `json:"name"`
-	GenderRate    int               `json:"gender_rate"`
-	CaptureRate   int               `json:"capture_rate"`
-	BaseHappiness int               `json:"base_happiness"`
-	IsBaby        bool              `json:"is_baby"`
-	IsLegendary   bool              `json:"is_legendary"`
-	IsMythical    bool              `json:"is_mythical"`
-	Color         PokemonColor      `json:"color"`
-	Habitat       PokemonHabitat    `json:"habitat"`
-	Generation    PokemonGeneration `json:"generation"`
-}
-
-type PokemonColor struct {
-	Name string `json:"name"`
-}
-
-type PokemonHabitat struct {
-	Name string `json:"name"`
-}
-
-type PokemonGeneration struct {
 	Name string `json:"name"`
 }
 
