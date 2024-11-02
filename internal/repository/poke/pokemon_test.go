@@ -41,6 +41,7 @@ func Test_outbound_SearchPokemon(t *testing.T) {
 				BaseExperience: 64,
 				Height:         7,
 				Weight:         69,
+				IsDefault:      true,
 				Order:          1,
 				Abilities: []PokemonAbilities{
 					{
@@ -143,6 +144,22 @@ func Test_outbound_SearchPokemon(t *testing.T) {
 				mockHTTPClient.EXPECT().Do(req).Return(&http.Response{
 					StatusCode: http.StatusOK,
 					Body:       io.NopCloser(bytes.NewReader([]byte(strings.TrimSpace(response)))),
+				}, nil)
+			},
+		},
+		{
+			name: "failed",
+			args: args{
+				name: "bulbasaur",
+			},
+			want:    nil,
+			wantErr: true,
+			mockFn: func(args args) {
+				urlPath := "https://pokeapi.co/api/v2/pokemon/bulbasaur"
+				req, _ := http.NewRequest(http.MethodGet, urlPath, nil)
+				mockHTTPClient.EXPECT().Do(req).Return(&http.Response{
+					StatusCode: http.StatusInternalServerError,
+					Body:       io.NopCloser(bytes.NewBufferString("Internal Server Error")),
 				}, nil)
 			},
 		},

@@ -23,3 +23,9 @@ func NewHandler(api *gin.Engine, service service) *Handler {
 		service,
 	}
 }
+
+func (h *Handler) RegisterRoute() {
+	route := h.Group("/pokemon")
+	//route.Use(middleware.AuthMiddleware())
+	route.GET("/:name", h.Search)
+}

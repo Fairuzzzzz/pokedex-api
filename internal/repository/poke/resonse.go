@@ -7,6 +7,7 @@ var response = `{
     "height": 7,
     "weight": 69,
     "order": 1,
+    "is_default": true,
     "abilities": [
         {
             "ability": {
