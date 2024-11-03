@@ -3,6 +3,7 @@ package poke
 import (
 	"context"
 
+	"github.com/Fairuzzzzz/pokedex-api/internal/middleware"
 	"github.com/Fairuzzzzz/pokedex-api/internal/models/poke"
 	"github.com/gin-gonic/gin"
 )
@@ -26,6 +27,6 @@ func NewHandler(api *gin.Engine, service service) *Handler {
 
 func (h *Handler) RegisterRoute() {
 	route := h.Group("/pokemon")
-	//route.Use(middleware.AuthMiddleware())
+	route.Use(middleware.AuthMiddleware())
 	route.GET("/:name", h.Search)
 }

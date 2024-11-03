@@ -32,12 +32,12 @@ func ValidateToken(tokenStr, secretKey string) (int64, string, error) {
 	})
 
 	if err != nil {
-		return 0, "", nil
+		return 0, "", err
 	}
 
 	if !token.Valid {
 		return 0, "", errors.New("invalid token")
 	}
 
-	return int64(claims["id"].(float64)), claims["usename"].(string), nil
+	return int64(claims["id"].(float64)), claims["username"].(string), nil
 }
