@@ -8,6 +8,7 @@ import (
 	membershipsHandler "github.com/Fairuzzzzz/pokedex-api/internal/handler/memberships"
 	pokesHandler "github.com/Fairuzzzzz/pokedex-api/internal/handler/poke"
 	"github.com/Fairuzzzzz/pokedex-api/internal/models/memberships"
+	"github.com/Fairuzzzzz/pokedex-api/internal/models/team"
 	membershipsRepo "github.com/Fairuzzzzz/pokedex-api/internal/repository/memberships"
 	pokesOutbound "github.com/Fairuzzzzz/pokedex-api/internal/repository/poke"
 	membershipsSvc "github.com/Fairuzzzzz/pokedex-api/internal/service/memberships"
@@ -41,6 +42,7 @@ func main() {
 	}
 
 	db.AutoMigrate(&memberships.User{})
+	db.AutoMigrate(&team.PokeTeam{})
 
 	httpClient := httpclient.NewClient(&http.Client{})
 
