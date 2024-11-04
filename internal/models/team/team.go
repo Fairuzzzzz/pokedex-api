@@ -1,19 +1,16 @@
 package team
 
 import (
-	"github.com/Fairuzzzzz/pokedex-api/internal/models/memberships"
 	"gorm.io/gorm"
 )
 
 type (
 	PokeTeam struct {
 		gorm.Model
-		UserID    uint             `gorm:"not null;index"`
-		User      memberships.User `gorm:"foreigenKey:UserID"`
-		TeamName  string           `gorm:"not null"`
-		TeamID    uint             `gorm:"not null;index"`
-		CreatedBy string           `gorm:"not null"`
-		UpdatedBy string           `gorm:"not null"`
+		UserID    uint   `gorm:"not null"`
+		TeamName  string `gorm:"not null"`
+		CreatedBy string `gorm:"not null"`
+		UpdatedBy string `gorm:"not null"`
 	}
 )
 
@@ -23,7 +20,7 @@ type (
 	}
 
 	PokeTeamRequestByID struct {
+		ID     uint `json:"id"`
 		UserID uint `json:"userID"`
-		TeamID uint `json:"teamID"`
 	}
 )

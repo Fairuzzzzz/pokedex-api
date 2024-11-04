@@ -7,12 +7,15 @@ import (
 	"github.com/Fairuzzzzz/pokedex-api/internal/configs"
 	membershipsHandler "github.com/Fairuzzzzz/pokedex-api/internal/handler/memberships"
 	pokesHandler "github.com/Fairuzzzzz/pokedex-api/internal/handler/poke"
+	teamsHandler "github.com/Fairuzzzzz/pokedex-api/internal/handler/team"
 	"github.com/Fairuzzzzz/pokedex-api/internal/models/memberships"
 	"github.com/Fairuzzzzz/pokedex-api/internal/models/team"
 	membershipsRepo "github.com/Fairuzzzzz/pokedex-api/internal/repository/memberships"
 	pokesOutbound "github.com/Fairuzzzzz/pokedex-api/internal/repository/poke"
+	teamsRepo "github.com/Fairuzzzzz/pokedex-api/internal/repository/team"
 	membershipsSvc "github.com/Fairuzzzzz/pokedex-api/internal/service/memberships"
 	pokesSvc "github.com/Fairuzzzzz/pokedex-api/internal/service/poke"
+	teamsSvc "github.com/Fairuzzzzz/pokedex-api/internal/service/team"
 	"github.com/Fairuzzzzz/pokedex-api/pkg/httpclient"
 	"github.com/Fairuzzzzz/pokedex-api/pkg/internalsql"
 	"github.com/gin-gonic/gin"
@@ -50,15 +53,22 @@ func main() {
 
 	pokeOutbound := pokesOutbound.NewPokeOutbound(cfg, httpClient)
 
+	teamRepo := teamsRepo.NewRepository(db)
+
 	membershipSvc := membershipsSvc.NewService(cfg, membershipRepo)
 
 	pokeSvc := pokesSvc.NewOutbound(pokeOutbound)
+
+	teamSvc := teamsSvc.NewService(teamRepo)
 
 	membershipHandler := membershipsHandler.NewHandler(r, membershipSvc)
 	membershipHandler.RegisterRoute()
 
 	pokeHandler := pokesHandler.NewHandler(r, pokeSvc)
 	pokeHandler.RegisterRoute()
+
+	teamHandler := teamsHandler.NewHandler(r, teamSvc)
+	teamHandler.RegisterRoute()
 
 	r.Run(cfg.Service.Port)
 }

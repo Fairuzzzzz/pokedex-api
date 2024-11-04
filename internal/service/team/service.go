@@ -10,9 +10,9 @@ import (
 type repository interface {
 	Create(ctx context.Context, model team.PokeTeam) error
 	Update(ctx context.Context, model team.PokeTeam) error
-	Get(ctx context.Context, userID uint, teamID uint) (*team.PokeTeam, error)
+	Get(ctx context.Context, userID uint, ID uint) (*team.PokeTeam, error)
 	List(ctx context.Context, userID uint) ([]team.PokeTeam, error)
-	Delete(ctx context.Context, userID uint, teamID uint) error
+	Delete(ctx context.Context, userID uint, ID uint) error
 }
 
 type service struct {

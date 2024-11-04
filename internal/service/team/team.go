@@ -7,7 +7,6 @@ import (
 
 	"github.com/Fairuzzzzz/pokedex-api/internal/models/team"
 	"github.com/rs/zerolog/log"
-	"gorm.io/gorm"
 )
 
 func (s *service) CreateTeam(ctx context.Context, userID uint, request team.PokeTeamNameRequest) error {
@@ -23,8 +22,7 @@ func (s *service) CreateTeam(ctx context.Context, userID uint, request team.Poke
 	}
 
 	err := s.repository.Create(ctx, model)
-
-	if err != nil && err != gorm.ErrRecordNotFound {
+	if err != nil {
 		log.Error().Err(err).Msg("error create team record to database")
 		return err
 	}
@@ -42,7 +40,7 @@ func (s *service) ListTeam(ctx context.Context, userID uint) ([]team.PokeTeam, e
 }
 
 func (s *service) GetTeam(ctx context.Context, request team.PokeTeamRequestByID) (*team.PokeTeam, error) {
-	pokeTeam, err := s.repository.Get(ctx, request.UserID, request.TeamID)
+	pokeTeam, err := s.repository.Get(ctx, request.UserID, request.ID)
 	if err != nil {
 		log.Error().Err(err).Msg("error getting team from database")
 		return nil, err
@@ -52,7 +50,7 @@ func (s *service) GetTeam(ctx context.Context, request team.PokeTeamRequestByID)
 }
 
 func (s *service) DeleteTeam(ctx context.Context, request team.PokeTeamRequestByID) error {
-	err := s.repository.Delete(ctx, request.UserID, request.TeamID)
+	err := s.repository.Delete(ctx, request.UserID, request.ID)
 	if err != nil {
 		log.Error().Err(err).Msg("error delete team from database")
 		return err
