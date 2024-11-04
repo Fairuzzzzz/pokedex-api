@@ -41,4 +41,22 @@ func (s *service) ListTeam(ctx context.Context, userID uint) ([]team.PokeTeam, e
 	return listTeam, nil
 }
 
-// TODO Get Team and Delete Team
+func (s *service) GetTeam(ctx context.Context, request team.PokeTeamRequestByID) (*team.PokeTeam, error) {
+	pokeTeam, err := s.repository.Get(ctx, request.UserID, request.TeamID)
+	if err != nil {
+		log.Error().Err(err).Msg("error getting team from database")
+		return nil, err
+	}
+
+	return pokeTeam, nil
+}
+
+func (s *service) DeleteTeam(ctx context.Context, request team.PokeTeamRequestByID) error {
+	err := s.repository.Delete(ctx, request.UserID, request.TeamID)
+	if err != nil {
+		log.Error().Err(err).Msg("error delete team from database")
+		return err
+	}
+
+	return nil
+}

@@ -21,4 +21,9 @@ type (
 	PokeTeamNameRequest struct {
 		TeamName string `json:"teamName"`
 	}
+
+	PokeTeamRequestByID struct {
+		UserID uint `json:"userID"`
+		TeamID uint `json:"teamID"`
+	}
 )

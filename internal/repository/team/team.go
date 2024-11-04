@@ -37,7 +37,7 @@ func (r *repository) Get(ctx context.Context, userID uint, teamID uint) (*team.P
 }
 
 func (r *repository) List(ctx context.Context, userID uint) ([]team.PokeTeam, error) {
-	pokeTeams := make([]team.PokeTeam, 0)
+	var pokeTeams []team.PokeTeam
 	res := r.db.WithContext(ctx).Where("user_id", userID).Order("team_id ASC").Preload("User").First(&pokeTeams)
 	if res.Error != nil {
 		return nil, res.Error

@@ -3,6 +3,7 @@ package team
 import (
 	"context"
 
+	"github.com/Fairuzzzzz/pokedex-api/internal/middleware"
 	"github.com/Fairuzzzzz/pokedex-api/internal/models/team"
 	"github.com/gin-gonic/gin"
 )
@@ -11,6 +12,8 @@ import (
 type service interface {
 	CreateTeam(ctx context.Context, userID uint, request team.PokeTeamNameRequest) error
 	ListTeam(ctx context.Context, userID uint) ([]team.PokeTeam, error)
+	GetTeam(ctx context.Context, request team.PokeTeamRequestByID) (*team.PokeTeam, error)
+	DeleteTeam(ctx context.Context, request team.PokeTeamRequestByID) error
 }
 
 type Handler struct {
@@ -25,9 +28,11 @@ func NewHandler(api *gin.Engine, service service) *Handler {
 	}
 }
 
-// TODO: add handler for create team and list team
 func (h *Handler) RegisterRoute() {
 	route := h.Group("/team")
-	route.POST("/create-team")
-	route.GET("/list-team")
+	route.Use(middleware.AuthMiddleware())
+	route.POST("/create-team", h.CreateTeam)
+	route.GET("/list-team", h.ListTeam)
+	route.POST("/get-team", h.GetTeam)
+	route.POST("/delete-team", h.DeleteTeam)
 }
