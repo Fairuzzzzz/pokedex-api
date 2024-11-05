@@ -56,32 +56,32 @@ func (mr *MockrepositoryMockRecorder) Create(ctx, model any) *gomock.Call {
 }
 
 // Delete mocks base method.
-func (m *Mockrepository) Delete(ctx context.Context, userID, teamID uint) error {
+func (m *Mockrepository) Delete(ctx context.Context, userID, ID uint) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Delete", ctx, userID, teamID)
+	ret := m.ctrl.Call(m, "Delete", ctx, userID, ID)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // Delete indicates an expected call of Delete.
-func (mr *MockrepositoryMockRecorder) Delete(ctx, userID, teamID any) *gomock.Call {
+func (mr *MockrepositoryMockRecorder) Delete(ctx, userID, ID any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*Mockrepository)(nil).Delete), ctx, userID, teamID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*Mockrepository)(nil).Delete), ctx, userID, ID)
 }
 
 // Get mocks base method.
-func (m *Mockrepository) Get(ctx context.Context, userID, teamID uint) (*team.PokeTeam, error) {
+func (m *Mockrepository) Get(ctx context.Context, userID, ID uint) (*team.PokeTeam, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Get", ctx, userID, teamID)
+	ret := m.ctrl.Call(m, "Get", ctx, userID, ID)
 	ret0, _ := ret[0].(*team.PokeTeam)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Get indicates an expected call of Get.
-func (mr *MockrepositoryMockRecorder) Get(ctx, userID, teamID any) *gomock.Call {
+func (mr *MockrepositoryMockRecorder) Get(ctx, userID, ID any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*Mockrepository)(nil).Get), ctx, userID, teamID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*Mockrepository)(nil).Get), ctx, userID, ID)
 }
 
 // List mocks base method.
