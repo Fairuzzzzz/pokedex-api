@@ -33,6 +33,6 @@ func (h *Handler) RegisterRoute() {
 	route.Use(middleware.AuthMiddleware())
 	route.POST("/create-team", h.CreateTeam)
 	route.GET("/list-team", h.ListTeam)
-	route.POST("/get-team", h.GetTeam)
+	route.GET("/get-team", h.GetTeam)
 	route.POST("/delete-team", h.DeleteTeam)
 }
