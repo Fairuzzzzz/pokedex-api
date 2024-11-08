@@ -7,14 +7,18 @@ import (
 	"github.com/Fairuzzzzz/pokedex-api/internal/configs"
 	membershipsHandler "github.com/Fairuzzzzz/pokedex-api/internal/handler/memberships"
 	pokesHandler "github.com/Fairuzzzzz/pokedex-api/internal/handler/poke"
+	pokemonteamsHandler "github.com/Fairuzzzzz/pokedex-api/internal/handler/pokemoninteam"
 	teamsHandler "github.com/Fairuzzzzz/pokedex-api/internal/handler/team"
 	"github.com/Fairuzzzzz/pokedex-api/internal/models/memberships"
+	"github.com/Fairuzzzzz/pokedex-api/internal/models/pokemoninteam"
 	"github.com/Fairuzzzzz/pokedex-api/internal/models/team"
 	membershipsRepo "github.com/Fairuzzzzz/pokedex-api/internal/repository/memberships"
 	pokesOutbound "github.com/Fairuzzzzz/pokedex-api/internal/repository/poke"
+	pokemonteamRepo "github.com/Fairuzzzzz/pokedex-api/internal/repository/pokemoninteam"
 	teamsRepo "github.com/Fairuzzzzz/pokedex-api/internal/repository/team"
 	membershipsSvc "github.com/Fairuzzzzz/pokedex-api/internal/service/memberships"
 	pokesSvc "github.com/Fairuzzzzz/pokedex-api/internal/service/poke"
+	pokemonteamsSvc "github.com/Fairuzzzzz/pokedex-api/internal/service/pokemoninteam"
 	teamsSvc "github.com/Fairuzzzzz/pokedex-api/internal/service/team"
 	"github.com/Fairuzzzzz/pokedex-api/pkg/httpclient"
 	"github.com/Fairuzzzzz/pokedex-api/pkg/internalsql"
@@ -46,6 +50,7 @@ func main() {
 
 	db.AutoMigrate(&memberships.User{})
 	db.AutoMigrate(&team.PokeTeam{})
+	db.AutoMigrate(&pokemoninteam.PokemonNameInTeam{})
 
 	httpClient := httpclient.NewClient(&http.Client{})
 
@@ -55,11 +60,15 @@ func main() {
 
 	teamRepo := teamsRepo.NewRepository(db)
 
+	pokemonRepo := pokemonteamRepo.NewRepository(db)
+
 	membershipSvc := membershipsSvc.NewService(cfg, membershipRepo)
 
 	pokeSvc := pokesSvc.NewOutbound(pokeOutbound)
 
 	teamSvc := teamsSvc.NewService(teamRepo)
+
+	pokemonteamSvc := pokemonteamsSvc.NewService(pokemonRepo, pokeOutbound)
 
 	membershipHandler := membershipsHandler.NewHandler(r, membershipSvc)
 	membershipHandler.RegisterRoute()
@@ -69,6 +78,9 @@ func main() {
 
 	teamHandler := teamsHandler.NewHandler(r, teamSvc)
 	teamHandler.RegisterRoute()
+
+	pokemonteamHandler := pokemonteamsHandler.NewHandler(r, pokemonteamSvc)
+	pokemonteamHandler.RegisterRoute()
 
 	r.Run(cfg.Service.Port)
 }
