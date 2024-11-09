@@ -39,6 +39,7 @@ func (s *service) AddPokemonToTeam(ctx context.Context, userID uint, request pok
 	err = s.repository.Create(ctx, model)
 	if err != nil {
 		log.Error().Err(err).Msg("error create pokemon in team")
+		return err
 	}
 	return nil
 }
