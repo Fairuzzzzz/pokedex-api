@@ -20,7 +20,7 @@ func (r *repository) DeletePokemon(ctx context.Context, teamID uint, pokemonID i
 
 func (r *repository) List(ctx context.Context, teamID uint) ([]pokemoninteam.PokemonTeamResponse, error) {
 	var pokeTeam []pokemoninteam.PokemonTeamResponse
-	res := r.db.WithContext(ctx).Select("team_id, pokemon_id, pokemon_name").Where("team_id = ?", teamID).Find(&pokeTeam)
+	res := r.db.WithContext(ctx).Table("pokemon_name_in_teams").Select("team_id, pokemon_id, pokemon_name").Where("team_id = ?", teamID).Find(&pokeTeam)
 	if res.Error != nil {
 		return nil, res.Error
 	}
