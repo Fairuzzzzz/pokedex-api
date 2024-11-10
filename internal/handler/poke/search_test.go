@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/Fairuzzzzz/pokedex-api/internal/models/poke"
+	"github.com/Fairuzzzzz/pokedex-api/pkg/jwt"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
@@ -241,6 +242,11 @@ func TestHandler_Search(t *testing.T) {
 			endpoint := `/pokemon/bulbasaur`
 			req, err := http.NewRequest(http.MethodGet, endpoint, nil)
 			assert.NoError(t, err)
+
+			// Token JWT Authorization
+			token, err := jwt.CreateToken(1, "", "")
+			assert.NoError(t, err)
+			req.Header.Set("Authorization", token)
 
 			h.ServeHTTP(w, req)
 

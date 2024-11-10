@@ -87,7 +87,6 @@ func Test_repository_Create(t *testing.T) {
 					args.model.TeamName,
 					args.model.CreatedBy,
 					args.model.UpdatedBy,
-					args.model.ID,
 				).WillReturnError(assert.AnError)
 				mock.ExpectRollback()
 			},
