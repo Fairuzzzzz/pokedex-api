@@ -30,7 +30,7 @@ func NewHandler(api *gin.Engine, service service) *Handler {
 func (h *Handler) RegisterRoute() {
 	route := h.Group("/pokemon-team")
 	route.Use(middleware.AuthMiddleware())
-	route.GET("/list-pokemon", h.ListPokemon)
+	route.GET("/list/:teamID", h.ListPokemon)
 	route.POST("/add", h.AddPokemon)
 	route.POST("/remove", h.DeletePokemon)
 }
